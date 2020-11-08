@@ -1,0 +1,150 @@
+<html>
+    <head>
+
+        <!-- Load ioBroker scripts and styles-->
+        <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+        <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+        <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+        <script type="text/javascript" src="../../js/translate.js"></script>
+        <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+        <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+        <!-- Load our own files -->
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" src="words.js"></script>
+
+        <script type="text/javascript">
+            var setAuthenticateHref = function() {
+                $('#authenticate').attr('href', '//' + location.hostname + ':' + $('#proxyPort').val() + '/auth/signin')
+            }
+            // This will be called by the admin adapter when the settings page loads
+            function load(settings, onChange) {
+                var userInfo = function() {
+                    sendTo(null, 'getStatusInfo', null, function (response) {
+                        if(response.currentUser && response.currentUser.profile) {
+                            $('#authenticatedUserPrefix, #authenticatedUser').show()
+                            $('#authenticatedUser').html(response.currentUser.profile.displayName)
+                        } else {
+                            $('#authenticatedUserPrefix, #authenticatedUser').hide()
+                            $('#authenticatedUser').html('')
+                        }
+                    });
+                };
+                setInterval(userInfo, 2000);
+                userInfo();
+
+                var change = function(val) {
+                    if(val !== false) {
+                        $('#authenticate, #authenticateLoading').hide();
+                        $('#authenticateInfo').show();
+                    }
+                    onChange(val);
+                };
+                // example: select elements with id=key and class=value and insert value
+                if (!settings) return;
+                $('.value').each(function () {
+                    var $key = $(this);
+                    var id = $key.attr('id');
+                    if ($key.attr('type') === 'checkbox') {
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.prop('checked', settings[id])
+                            .on('change', () => change());
+                    } else {
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.val(settings[id])
+                            .on('change', () => change())
+                            .on('keyup', () => change());
+                    }
+                });
+                change(false);
+                setAuthenticateHref();
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                if (M) M.updateTextFields();
+            }
+
+            // This will be called by the admin adapter when the user presses the save button
+            function save(callback) {
+                // example: select elements with class=value and build settings object
+                var obj = {};
+                $('.value').each(function () {
+                    var $this = $(this);
+                    if ($this.attr('type') === 'checkbox') {
+                        obj[$this.attr('id')] = $this.prop('checked');
+                    } else {
+                        obj[$this.attr('id')] = $this.val();
+                    }
+                });
+                callback(obj);
+                if(obj.appId && obj.appPassword && obj.appTenant && obj.proxyPort) {
+                    setAuthenticateHref();
+                    $('#authenticateLoading').show();
+                    $('#authenticateInfo').hide();
+                    var proxyConnectedInterval = setInterval(function() {
+                        sendTo(null, 'getStatusInfo', null, function (response) {
+                            if(response.proxyConnected) {
+                                clearInterval(proxyConnectedInterval);
+                                $('#authenticate').show();
+                                $('#authenticateInfo, #authenticateLoading').hide();
+                            }
+                        });
+                    }, 1000);
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="m adapter-container">
+            <div class="row">
+                <div class="col s12 m4 l2">
+                    <img src="ms-teams.png" class="logo">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="value" id="appId" type="text">
+                            <label for="appId" class="translate">App ID</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input class="value" id="appPassword" type="password">
+                            <label for="appPassword" class="translate">App Password</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input class="value" id="appTenant" type="text">
+                            <label for="appTenant" class="translate">App Tenant</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-field col s6">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input class="value" id="proxyPort" type="number">
+                            <label for="proxyPort" class="translate">Proxy port</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input class="value" id="updateInterval" type="number">
+                            <label for="updateInterval" class="translate">Update interval in seconds</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <a id="authenticate" class="btn" target="_parent">
+                                <span class="translate">Authenticate with Microsoft</span>
+                            </a>
+                            <span id="authenticateInfo" class="translate" style="display:none; color:red;">Please save before reauthenticate with Microsoft</span>
+                            <img src="loading.gif" id="authenticateLoading" style="display:none; width:80px;" />
+                        </div>
+                        <div class="input-field col s12">
+                            <span id="authenticatedUserPrefix" class="translate" style="display:none;">Authenticated as:</span>
+                            <span id="authenticatedUser" style="display:none; color:green;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

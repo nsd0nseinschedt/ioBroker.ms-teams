@@ -1,0 +1,10 @@
+{
+    "App ID": "App-ID",
+    "App Password": "App-wachtwoord",
+    "App Tenant": "App Huurder",
+    "Authenticate with Microsoft": "Verifieer bij Microsoft",
+    "Authenticated as:": "Geverifieerd als:",
+    "Please save before reauthenticate with Microsoft": "Sla op voordat u opnieuw verifieert bij Microsoft",
+    "Proxy port": "Proxy-poort",
+    "Update interval in seconds": "Update-interval in seconden"
+}

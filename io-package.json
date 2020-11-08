@@ -1,0 +1,78 @@
+{
+  "common": {
+    "name": "ms-teams",
+    "version": "0.0.1",
+    "news": {
+      "0.0.1": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Начальная версия",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "zh-cn": "首次出版"
+      }
+    },
+    "title": "MS Teams",
+    "titleLang": {
+      "en": "MS Teams",
+      "de": "MS-Teams",
+      "ru": "Команды MS",
+      "pt": "Equipes MS",
+      "nl": "MS Teams",
+      "fr": "Équipes MS",
+      "it": "MS Teams",
+      "es": "Equipos de MS",
+      "pl": "Zespoły MS",
+      "zh-cn": "MS队"
+    },
+    "desc": {
+      "en": "ms-teams",
+      "de": "MS-Teams",
+      "ru": "мс-команды",
+      "pt": "MS-times",
+      "nl": "ms-teams",
+      "fr": "ms-équipes",
+      "it": "ms-team",
+      "es": "ms-equipos",
+      "pl": "zespoły ms",
+      "zh-cn": "团队"
+    },
+    "authors": [
+      "nseinschedt <nseinschedt@gmail.com>"
+    ],
+    "keywords": [
+      "Microsoft Teams"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "ms-teams.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/nseinschedt/ioBroker.ms-teams/master/admin/ms-teams.png",
+    "readme": "https://github.com/nseinschedt/ioBroker.ms-teams/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "messaging",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "materialize": true,
+    "messagebox": true,
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ]
+  },
+  "native": {
+    "appTenant": "common",
+    "proxyPort": 61234,
+    "updateInterval": 10
+  },
+  "objects": [],
+  "instanceObjects": []
+}

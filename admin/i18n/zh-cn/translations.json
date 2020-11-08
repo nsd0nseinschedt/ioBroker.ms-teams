@@ -1,0 +1,10 @@
+{
+    "App ID": "应用程式编号",
+    "App Password": "应用密码",
+    "App Tenant": "应用租户",
+    "Authenticate with Microsoft": "与Microsoft进行身份验证",
+    "Authenticated as:": "认证为：",
+    "Please save before reauthenticate with Microsoft": "请保存，然后再与Microsoft重新认证",
+    "Proxy port": "代理端口",
+    "Update interval in seconds": "更新间隔（以秒为单位）"
+}

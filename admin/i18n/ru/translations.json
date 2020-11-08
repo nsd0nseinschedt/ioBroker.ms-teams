@@ -1,0 +1,10 @@
+{
+    "App ID": "ID приложения",
+    "App Password": "Пароль приложения",
+    "App Tenant": "Клиент приложения",
+    "Authenticate with Microsoft": "Аутентифицироваться в Microsoft",
+    "Authenticated as:": "Аутентифицирован как:",
+    "Please save before reauthenticate with Microsoft": "Пожалуйста, сохраните перед повторной аутентификацией в Microsoft",
+    "Proxy port": "Порт прокси",
+    "Update interval in seconds": "Интервал обновления в секундах"
+}

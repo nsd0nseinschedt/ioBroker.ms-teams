@@ -1,0 +1,10 @@
+{
+    "App ID": "ID d'application",
+    "App Password": "Mot de passe de l'application",
+    "App Tenant": "Locataire de l'application",
+    "Authenticate with Microsoft": "S'authentifier auprès de Microsoft",
+    "Authenticated as:": "Authentifié comme:",
+    "Please save before reauthenticate with Microsoft": "Veuillez enregistrer avant de vous authentifier à nouveau avec Microsoft",
+    "Proxy port": "Port proxy",
+    "Update interval in seconds": "Intervalle de mise à jour en secondes"
+}

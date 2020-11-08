@@ -1,20 +1,3 @@
-![Logo](admin/ms-teams.png)
-# ioBroker.ms-teams
-
-## ms-teams adapter for ioBroker
-This adapter monitors your MS-Teams availability and activity status.
-It was inspired by sagilo´s on-air node module
-
-## Prerequisites
-You need to register a web application with the Azure Active Directory admin center
-You need to provide user.read & Presence.Read permissions and get an admin concent
-
-## Changelog
-
-### 0.0.1
-* (nseinschedt) initial release
-
-## License
 MIT License
 
 Copyright (c) 2020 nseinschedt <nseinschedt@gmail.com>

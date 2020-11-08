@@ -1,0 +1,10 @@
+{
+    "App ID": "App ID",
+    "App Password": "App Passwort",
+    "App Tenant": "App Tenant",
+    "Authenticate with Microsoft": "Authentifizieren Sie sich bei Microsoft",
+    "Authenticated as:": "Authentifiziert als:",
+    "Please save before reauthenticate with Microsoft": "Bitte speichern Sie, bevor Sie sich erneut bei Microsoft authentifizieren",
+    "Proxy port": "Proxy-Port",
+    "Update interval in seconds": "Aktualisierungsintervall in Sekunden"
+}

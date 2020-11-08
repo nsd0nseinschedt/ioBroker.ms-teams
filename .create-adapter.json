@@ -1,0 +1,36 @@
+{
+    "cli": true,
+    "adapterName": "ms-teams",
+    "title": "MS Teams",
+    "keywords": [
+        "Microsoft Teams"
+    ],
+    "expert": "no",
+    "features": [
+        "adapter"
+    ],
+    "adminFeatures": [],
+    "type": "messaging",
+    "startMode": "daemon",
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "connectionIndicator": "no",
+    "language": "JavaScript",
+    "adminReact": "no",
+    "tools": [
+        "ESLint",
+        "type checking"
+    ],
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "es6class": "yes",
+    "authorName": "nseinschedt",
+    "authorGithub": "nseinschedt",
+    "authorEmail": "nseinschedt@gmail.com",
+    "gitRemoteProtocol": "HTTPS",
+    "gitCommit": "no",
+    "license": "MIT License",
+    "ci": "gh-actions",
+    "dependabot": "no",
+    "creatorVersion": "1.30.0"
+}
