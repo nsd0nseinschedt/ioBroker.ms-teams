@@ -34,13 +34,17 @@ class MsTeams extends utils.Adapter {
 
     async onReady(adminPort) {
         const adapter = this;
-        let proxyConnected = false;
         let currentUser = null;
         const users = {};
-        const oauthAuthorityUrl = oauthAuthorityHost + (this.config.appTenant || 'common') + '/';
-        let port = parseInt(this.config.proxyPort, 10);
-        port = isNaN(port) ? this.config.proxyPort : (port >= 0 ? port : false);
+
+        let proxyConnected = false;
+        let proxyPort = parseInt(this.config.proxyPort, 10);
+        proxyPort = isNaN(proxyPort) ? this.config.proxyPort : (proxyPort >= 0 ? proxyPort : false);
         const adminConfigUrl = 'http://' + ipInfo.address() + ':' + adminPort + '/#tab-instances/config/system.adapter.ms-teams.' + adapter.instance;
+
+        const oauthAuthorityUrl = oauthAuthorityHost + (this.config.appTenant || 'common') + '/';
+        const oauthCallbackUrl = 'http://' + ipInfo.address() + ':' + proxyPort + '/auth/callback';
+        const oauthSigninUrl = 'http://' + ipInfo.address() + ':' + proxyPort + '/auth/signin';
 
         await this.setObjectNotExistsAsync('availability', {
             type: 'state',
@@ -112,7 +116,7 @@ class MsTeams extends utils.Adapter {
                 clientID: this.config.appId,
                 responseType: 'code id_token',
                 responseMode: 'form_post',
-                redirectUrl: 'http://' + ipInfo.address() + ':' + port +'/auth/callback',
+                redirectUrl: oauthCallbackUrl,
                 allowHttpForRedirectUrl: true,
                 clientSecret: this.config.appPassword,
                 validateIssuer: false,
@@ -130,7 +134,7 @@ class MsTeams extends utils.Adapter {
         ));
 
         const app = express();
-        app.set('port', port);
+        app.set('port', proxyPort);
         app.use(session({
             secret: 'dsakbb12-adsj78lkn-klmsda',
             resave: false,
@@ -191,12 +195,12 @@ class MsTeams extends utils.Adapter {
         });
 
         const server = http.createServer(app);
-        server.listen(port);
+        server.listen(proxyPort);
         server.on('error', (error) => {
             if (error.syscall !== 'listen') {
                 throw error;
             }
-            const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+            const bind = typeof proxyPort === 'string' ? 'Pipe ' + proxyPort : 'Port ' + proxyPort;
             switch (error.code) {
                 case 'EACCES':
                     this.log.error(bind + ' requires elevated privileges');
@@ -219,7 +223,7 @@ class MsTeams extends utils.Adapter {
         adapter.on('message', function(msg) {
             switch (msg.command) {
                 case 'getStatusInfo':
-                    adapter.sendTo(msg.from, msg.command, { proxyConnected, currentUser }, msg.callback);
+                    adapter.sendTo(msg.from, msg.command, { proxyConnected, currentUser, oauthSigninUrl }, msg.callback);
                     break;
             }
         });
