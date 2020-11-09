@@ -1,7 +1,8 @@
 'use strict';
 
 const utils = require('@iobroker/adapter-core');
-const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const ipInfo = require('ip');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -43,8 +44,8 @@ class MsTeams extends utils.Adapter {
         const adminConfigUrl = 'http://' + ipInfo.address() + ':' + adminPort + '/#tab-instances/config/system.adapter.ms-teams.' + adapter.instance;
 
         const oauthAuthorityUrl = oauthAuthorityHost + (this.config.appTenant || 'common') + '/';
-        const oauthCallbackUrl = 'http://' + ipInfo.address() + ':' + proxyPort + '/auth/callback';
-        const oauthSigninUrl = 'http://' + ipInfo.address() + ':' + proxyPort + '/auth/signin';
+        const oauthCallbackUrl = 'https://' + ipInfo.address() + ':' + proxyPort + '/auth/callback';
+        const oauthSigninUrl = 'https://' + ipInfo.address() + ':' + proxyPort + '/auth/signin';
 
         await this.setObjectNotExistsAsync('availability', {
             type: 'state',
@@ -194,7 +195,10 @@ class MsTeams extends utils.Adapter {
             res.redirect(adminConfigUrl);
         });
 
-        const server = http.createServer(app);
+        const server = https.createServer({
+            key: fs.readFileSync(__dirname + '/key.pem'),
+            cert: fs.readFileSync(__dirname + '/cert.pem')
+        }, app);
         server.listen(proxyPort);
         server.on('error', (error) => {
             if (error.syscall !== 'listen') {
