@@ -51,7 +51,7 @@ class MsTeams extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'availability',
-                type: 'state',
+                type: 'string',
                 role: 'state',
                 read: true,
                 write: true,
@@ -62,7 +62,7 @@ class MsTeams extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'activity',
-                type: 'state',
+                type: 'string',
                 role: 'state',
                 read: true,
                 write: true,
